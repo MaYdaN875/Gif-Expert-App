@@ -1,40 +1,42 @@
 import { mockGifs } from "./mocks/gifs.mocks";
+import { CustomHeader } from "./shared/components/CustomHeadr";
+import { PreviousSearches } from "./gifs/components/PreviousSearches";
+import { SearchBar } from "./shared/components/SearchBar";
+import { GifList } from "./gifs/components/GifList";
+import { useEffect, useState } from "react";
 
 
 export const GifsApp = () => {
+  const [previousTerms, setPreviousTerms] = useState(["Goku", "Saitama", "Elden ring", "Berserk"]);
+
+
+
+  const handleTermClicked = (term: string) => {
+    console.log(term);
+  }
+
+  const handleSearch = (query: string) =>{
+    if(previousTerms.includes(query)) return;
+    if(query.trim().length === 0) return;
+    setPreviousTerms([query, ...previousTerms].splice(0,7));
+  }
   return (
     <>
         {/*Header*/}
-        <div className="search-container">
-            <input type="text" placeholder="Buscar gifs" />
-            <button>Buscar</button>
-        </div>
+        <CustomHeader title="Gifs App" description="Busca tus gifs favoritos" />
+        
+        <SearchBar
+
+          onSearch={handleSearch}
+        />
         {/* Busquedas previas*/}
 
-        <div className="previous-searches">
-            <h2>Busquedas previas</h2>
-            <ul className="previous-searches-list">
-                <li>Goku</li>
-                <li>Saitama</li>
-                <li>Elden ring</li>
-                <li>Berserk</li>
-            </ul>
-        </div>
 
-        {/* */ }
+       <PreviousSearches searches={previousTerms} onSearchClick={handleTermClicked} />
 
-        <div className="gifs-container">
-            {
-                mockGifs.map( (gif) => (
-                    <div key={gif.id} className="gif-card">
-                        <img src={gif.url} alt={gif.title} width={gif.width} height={gif.height} />
-                        <h3>{gif.title}</h3>
-                        <p>{gif.width}x{gif.height}</p>
-                    </div>
-                    
-                ))
-            }
-        </div>
+        {/* Gifs List */ }
+
+        <GifList gifs={mockGifs}/>
     </>
   );
 }
