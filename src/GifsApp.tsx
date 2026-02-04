@@ -1,9 +1,9 @@
-import { mockGifs } from "./mocks/gifs.mocks";
+
 import { CustomHeader } from "./shared/components/CustomHeadr";
 import { PreviousSearches } from "./gifs/components/PreviousSearches";
 import { SearchBar } from "./shared/components/SearchBar";
 import { GifList } from "./gifs/components/GifList";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.action";
 import type { Gif } from "./gifs/interfaces/gif.interface";
 
