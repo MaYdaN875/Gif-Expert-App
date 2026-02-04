@@ -4,6 +4,7 @@ import { PreviousSearches } from "./gifs/components/PreviousSearches";
 import { SearchBar } from "./shared/components/SearchBar";
 import { GifList } from "./gifs/components/GifList";
 import { useEffect, useState } from "react";
+import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.action";
 
 
 export const GifsApp = () => {
@@ -15,10 +16,12 @@ export const GifsApp = () => {
     console.log(term);
   }
 
-  const handleSearch = (query: string) =>{
+  const handleSearch = async (query: string) =>{
     if(previousTerms.includes(query)) return;
     if(query.trim().length === 0) return;
     setPreviousTerms([query, ...previousTerms].splice(0,7));
+    const gifs = await getGifsByQuery(query);
+    console.log(gifs);
   }
   return (
     <>
