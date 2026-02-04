@@ -5,11 +5,13 @@ import { SearchBar } from "./shared/components/SearchBar";
 import { GifList } from "./gifs/components/GifList";
 import { useEffect, useState } from "react";
 import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.action";
+import type { Gif } from "./gifs/interfaces/gif.interface";
 
 
 export const GifsApp = () => {
-  const [previousTerms, setPreviousTerms] = useState(["Goku", "Saitama", "Elden ring", "Berserk"]);
+  const [previousTerms, setPreviousTerms] = useState<string[]>([]);
 
+  const [gifs, setGifs] = useState<Gif[]>([]);
 
 
   const handleTermClicked = (term: string) => {
@@ -21,7 +23,8 @@ export const GifsApp = () => {
     if(query.trim().length === 0) return;
     setPreviousTerms([query, ...previousTerms].splice(0,7));
     const gifs = await getGifsByQuery(query);
-    console.log(gifs);
+    setGifs(gifs);
+    
   }
   return (
     <>
@@ -39,7 +42,7 @@ export const GifsApp = () => {
 
         {/* Gifs List */ }
 
-        <GifList gifs={mockGifs}/>
+        <GifList gifs={gifs}/>
     </>
   );
 }
