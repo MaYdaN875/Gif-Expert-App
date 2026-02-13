@@ -1,8 +1,11 @@
+import type { FC } from "react";
+import type { Gif } from "../interfaces/gif.interface";
+
 interface Props{
-    gifs: any[];
+    gifs: Gif[];
 }
 
-export const GifList = ({gifs}: Props) => {
+export const GifList: FC<Props> = ({gifs}) => {
   return (
     <div className="gifs-container">
             {
